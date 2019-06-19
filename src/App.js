@@ -1,26 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React ,{Component} from 'react';
+import './App.css'
+import Moviecard from './Components/moviecard';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const originalMovies =
+[
+  {id:1, title:"Ishaqzaade"},
+  {id:2, title:"Carry on Jatta"},
+  {id:3, title:"She's out of you league"}
+];
+  
+
+
+class App extends Component{
+
+  state = {movies : []}
+
+  async componentDidMount(){
+    // setTimeout(() =>
+    // this.setState({movies : originalMovies}), 5000)
+    const response = await fetch(`https://api.themoviedb.org/3/movie/top_rated?api_key=2c0c5440329269a1ed7322538d49d2fc&language=en-US&page=1`)
+    const json = await response.json();
+    this.setState({movies: json.results});
+  }
+
+  render(){
+
+    const {movies} = this.state;
+    return(
+      <div className='App'>
+        {movies.map(movie =>
+        <Moviecard movie={movie}/>)}
+      </div>
+
+    );
+  }
+
 }
+
 
 export default App;
