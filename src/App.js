@@ -1,6 +1,8 @@
 import React ,{Component} from 'react';
 import './App.css'
 import Moviecard from './Components/moviecard';
+import Appbar from './Designs/Appbar';
+import MovieDialogue from './Components/MovieDialogue';
 
 const originalMovies =
 [
@@ -12,8 +14,12 @@ const originalMovies =
 
 
 class App extends Component{
+  
 
-  state = {movies : []}
+  state = {movies : [], selectedMovie : null}
+
+  selectMovie = movie => this.setState({selectedMovie: movie});
+  clearMovie = () => this.setState({selectedMovie: null});
 
   async componentDidMount(){
     // setTimeout(() =>
@@ -25,11 +31,14 @@ class App extends Component{
 
   render(){
 
-    const {movies} = this.state;
+    const {movies, selectedMovie} = this.state;
     return(
-      <div className='App'>
-        {movies.map(movie =>
-        <Moviecard movie={movie}/>)}
+      <div>
+        <Appbar/>
+        <div className='App'>
+        {movies.map(movie => <Moviecard movie={movie} selectMovie={this.selectMovie }/>)}
+        </div>
+        <MovieDialogue movie={selectedMovie} handleClose = {this.clearMovie}/>
       </div>
 
     );
