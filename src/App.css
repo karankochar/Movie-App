@@ -14,3 +14,11 @@
   height: 169px;
 
 }
+.movie-detail-image{
+  height: 513px;
+  width: 342px;
+}
+.input{
+  position: absolute;
+  right:100px;
+}
